@@ -7,62 +7,51 @@
 <!-- ---------------------------------------------------- -->
 <head>
 <meta charset="utf-8"/>
- <add name="Access-Control-Allow-Origin" value="*" />
+
 
 <!-- ---------------------------------------------------- -->
-<script src="logicaFake/LogicaFake.js"></script>
-
-<!-- ---------------------------------------------------- -->
+<!-- Exportamos el archivo -->
+<script src="./logicaFake/LogicaFake.js"></script>
+<!-- Implementamos los cb para posibles errores-->
 <script>
-function obtenerMedicion() {
-  // llamo a la función en LogicaFake
-  obtenerUltimaMedicion(function( err, res ) {
-    // cuando tenga el resultado lo muestro
-    if ( err ) {
-
-      alert( " hubo un error de transmisión http: " + err )
-      return
-
-    } else if ( res.error ) {
-      alert( " hubo un error en la llamada: " + JSON.stringify( res.error ) )
-      return
+    function pulsarTodas(){
+        obtenerMediciones(function( err, res){
+            if(err){
+                alert("error de transmision")
+                return
+            }
+            else if(res.error){
+                alert("error en la llamada")
+            }
+            
+        })
     }
-  })
-
-}
-
+    function pulsarUltima(){
+        obtenerUltimaMedicion(function( err, res){
+            if(err){
+                alert("error de transmision")
+                return
+            }
+            else if(res.error){
+                alert("error en la llamada")
+            }
+            
+        })
+    }
 </script>
 <!-- ---------------------------------------------------- -->
-<script>
-function obtenerTodasMediciones() {
-  // llamo a la función en LogicaFake
-  obtenerMediciones(function( err, res ) {
-    // cuando tenga el resultado lo muestro
-    if ( err ) {
 
-      alert( " hubo un error de transmisión http: " + err )
-      return
-
-    } else if ( res.error ) {
-      alert( " hubo un error en la llamada: " + JSON.stringify( res.error ) )
-      return
-    }
-  })
-}
-
-</script>
 <!-- ---------------------------------------------------- -->
 </head>
 
 <!-- ---------------------------------------------------- -->
 <!-- ---------------------------------------------------- -->
 <body>
-  <ul id = "lista">
+  <ul id = "salida">
   </ul>
   <p id = "error"></p>
-  <button type="button" onclick="obtenerTodasMediciones()">Todas las mediciones</button>
-  <button type="button" onclick="obtenerMedicion()">Ultima medicion</button>
-
+  <button type="btnTodasMediciones" onclick="pulsarTodas()">Todas las mediciones</button>
+  <button type="btnUltimaMedicion" onclick="pulsarUltima()">Ultima medicion</button>
 </body>
 </html>
 <!-- ---------------------------------------------------- -->

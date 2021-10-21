@@ -1,5 +1,8 @@
 // .....................................................................
 // ReglasREST.js
+// @autor: Carlos Ramirez Dorado
+// @fecha: 15/10/2021
+// @descripcion: reglas para el servidor rest
 // .....................................................................
 var fs = require('fs')
 
@@ -20,12 +23,12 @@ async function( peticion, respuesta ){
 console.log( " * GET /mediciones " )
 var res = await laLogica.obtenerMediciones()
 var last = await laLogica.obtenerUltimaMedicion()
-if( res.length != last.id || res.length < 1) {
+if( res.length < 1) {
 // 404: not found
 respuesta.status(404).send( "no encontré las mediciones")
 return
 }
-// todo ok
+//200: todo ok
 respuesta.send( JSON.stringify( res ) )
 }) // get /mediciones
 // .....................................................................
@@ -44,7 +47,7 @@ if( res.length != 1 ) {
 respuesta.status(404).send( "no encontré la ultima medicion")
 return
 }
-// todo ok
+//200: todo ok
 respuesta.send( JSON.stringify( res[0] ) )
 }) // get /ultimaMedicion
 // .....................................................................

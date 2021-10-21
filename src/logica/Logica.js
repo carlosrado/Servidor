@@ -1,5 +1,8 @@
 // .....................................................................
 // Logica.js
+// @autor: Carlos Ramirez Dorado
+// @fecha: 15/10/2021
+// @descripcion: logica de negocio
 // .....................................................................
 const sqlite3 = require( "sqlite3" )
 // .....................................................................
@@ -46,8 +49,8 @@ await this.borrarFilasDe( "Medicion" )
 // .................................................................
 insertarMedicion( medicion ) {
 var textoSQL =
-'insert into Medicion values($id, $valorCO2, $valorTemperatura );'
-var valoresParaSQL = {id: medicion.id, $valorCO2: medicion.valorCO2, $valorTemperatura: medicion.valorTemperatura }
+'insert into Medicion values($id, $valor, $tipo, $fecha, $hora );'
+var valoresParaSQL = {$id: medicion.id, $valor: medicion.valor, $tipo: medicion.tipo, $fecha: medicion.fecha, $hora: medicion.hora }
 return new Promise( (resolver, rechazar) => {
 this.laConexion.run( textoSQL, valoresParaSQL, function( err ) {
 ( err ? rechazar(err) : resolver() )
@@ -70,7 +73,7 @@ this.laConexion.all( textoSQL, valoresParaSQL,
 })
 } // ()
 // .................................................................
-//           obtenerMediciones() <--
+//           obtenerUltimaMedicion() <--
 //       <--
 // {id:N, valorCO2:N, valorTemperatura:N}
 // .................................................................

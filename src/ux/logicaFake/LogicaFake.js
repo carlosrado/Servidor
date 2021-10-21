@@ -5,64 +5,50 @@
 //--------------------------------------------------------
 const IP_PUERTO="http://localhost:8080"
 
-function obtenerUltimaMedicion(cb){
-  fetch(IP_PUERTO+"/ultimaMedicion" , {
-		method: "get",
-        mode: 'no-cors'
-	}).then((respuesta)=>{
+
+
+function obtenerUltimaMedicion( cb ){
+
+	fetch(IP_PUERTO+"/ultimaMedicion", {method: "get"}).then((respuesta)=>{    
 		if(respuesta.status == 200){
 			return respuesta.json()
-		}else{
-			throw Error(respuesta.statusText)
 		}
-    if(respuesta.status == 200){
-			return respuesta.json()
-		}else{
+        else{
+
 			throw Error(respuesta.statusText)
 		}
 	}).then (function(datosJSON){
-    borrarLista(document.getElementById("lista"));
-    var medicion = document.createElement("li")
-    medicion.innerHTML = datoJSON['Medicion']
-    document.getElementById("lista").appendChild(medicion)	}).catch((err)=>{
+        		var ul = document.getElementById("salida")
+		        ul.innerHTML = ""
+                var li = document.createElement("li")
+                li.innerHTML = "id: " + datosJSON.id + " // valor: " + datosJSON.valor + " // tipo: " + datosJSON.tipo + " // fecha: " + datosJSON.fecha + " // hora: " + datosJSON.hora
+                ul.appendChild(li)
+
+	}).catch((err)=>{
 		console.log(err)
 		document.getElementById("error").innerHTML = "No se ha encontrado la ultima medicion";
 	})
 }
 
 function obtenerMediciones( cb ){
-	fetch(IP_PUERTO+"/mediciones" , {
-		method: "get",
-        mode: 'no-cors'
-	}).then((respuesta)=>{
-
-ç
-
+    
+	fetch(IP_PUERTO+"/mediciones", { method: "get" }).then((respuesta)=>{
 		if(respuesta.status == 200){
 			return respuesta.json()
 		}else{
 			throw Error(respuesta.statusText)
 		}
-    if(respuesta.status == 200){
-			return respuesta.json()
-		}else{
-			throw Error(respuesta.statusText)
-		}
 	}).then (function(datosJSON){
-    borrarLista(document.getElementById("lista"));
-    for(var i = 0; i<datosJSON.length;i++){
-      var dato = datosJSON[i];
-      var medicion = document.createElement("li")
-      medicion.innerHTML = dato['Medicion']
-      document.getElementById("lista").appendChild(medicion)
-    }
+        		var ul = document.getElementById("salida")
+		        ul.innerHTML = ""
+                datosJSON.forEach(function(item){
+                    var li = document.createElement("li")
+                    li.innerHTML = "id: " + item.id + " // valor: " + item.valor + " // tipo: " + item.tipo + " // fecha: " + item.fecha + " // hora: " + item.hora
+                    ul.appendChild(li)
+                })
+
 	}).catch((err)=>{
 		console.log(err)
-		document.getElementById("error").innerHTML = "No se han encontrado las mediciones";
+		document.getElementById("error").innerHTML = "No se ha encontrado las mediciones";
 	})
-}
-function borrarLista( lista ){
-  for(var i = 0; i < lista.length;i++){
-    document,getElementById(lista).removeChild(document,getElementById(lista).lastChild())
-  }
 }

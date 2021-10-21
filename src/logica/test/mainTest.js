@@ -32,12 +32,11 @@ await laLogica.borrarFilasDeTodasLasTablas()
 it( "puedo obtener ultima medicion",
 async function() {
 await laLogica.insertarMedicion(
-{ valorCO2: 55,
-valorTemperatura: 17 } )
+{ valor:12, tipo:"temperatura", fecha:"2021-4-10", hora: "12:12:12" } )
 var res = await laLogica.obtenerUltimaMedicion()
 assert.equal( res.length, 1, "¿no hay un resulado?" )
-assert.equal( res[0].valorCO2, 55, "¿no es 55?" )
-assert.equal( res[0].valorTemperatura, 17, "¿no es 17?" )
+assert.equal( res[0].valor, 12, "¿no es 12?" )
+assert.equal( res[0].id, 1, "¿no es 1?" )
 }) // it
 // ....................................................
 // ....................................................
@@ -45,21 +44,17 @@ it( "puedo obtener mediciones",
 async function() {
 await laLogica.borrarFilasDeTodasLasTablas()
 await laLogica.insertarMedicion(
-{ valorCO2: 55,
-valorTemperatura: 17 } )
+{ valor:12, tipo:"temperatura", fecha:"2021-4-10", hora: "12:12:12" })
 await laLogica.insertarMedicion(
-{ valorCO2: 55,
-valorTemperatura: 17 } )
+{ valor:82, tipo:"CO2", fecha:"2021-5-6", hora: "12:00:12" })
 await laLogica.insertarMedicion(
-{ valorCO2: 55,
-valorTemperatura: 17 } )
+{ valor:18, tipo:"CO2", fecha:"2021-12-12", hora: "22:12:12" })
 await laLogica.insertarMedicion(
-{ valorCO2: 55,
-valorTemperatura: 17 } )
+{ valor:-2, tipo:"temperatura", fecha:"2021-10-10", hora: "10:10:12" })
 var res = await laLogica.obtenerMediciones()
 assert.equal( res.length, 4, "¿no hay 4 mediciones?" )
-assert.equal( res[2].valorCO2, 55, "¿no es 55?" )
-assert.equal( res[3].valorTemperatura, 17, "¿no es 17?" )
+assert.equal( res[2].valor, 18, "¿no es 18?" )
+assert.equal( res[3].hora, "10:10:12", "¿no es 10:10:12?" )
 }) // it
 // ....................................................
 // ....................................................

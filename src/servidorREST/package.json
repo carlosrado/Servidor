@@ -12,7 +12,7 @@
   "dependencies": {
     "express": "*",
     "request": "*",
-    "sqlite3": "*"
+    "cors": "*"
   },
   "devDependencies": {
     "mocha": "*"

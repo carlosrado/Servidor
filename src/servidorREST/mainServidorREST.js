@@ -1,12 +1,14 @@
 // .....................................................................
 // mainServidorREST.js
+// @autor: Carlos Ramirez Dorado
+// @fecha: 15/10/2021
+// @descripcion: main servidor
 // .....................................................................
-// .....................................................................
-// .....................................................................
+//const cors = require( 'cors' )
 const express = require( 'express' )
 const bodyParser = require( 'body-parser' )
 const Logica = require( "../logica/Logica.js" )
-const cors = require("cors");
+const cors = require('cors')
 // .....................................................................
 // .....................................................................
 function cargarLogica( fichero ) {
@@ -28,10 +30,12 @@ async function main() {
 var laLogica = await cargarLogica( "../bd/datos.bd" )
 // creo el servidor
 var servidorExpress = express()
-servidorExpress.use(cors())
+
 // para poder acceder a la carga de la petición http
 // asumiendo que es JSON
-servidorExpress.use ( bodyParser.text({type: "application/json"}) )
+servidorExpress.use ( bodyParser.text({type: "application/json;charset=utf-8"}) )
+// le doy los permisos
+servidorExpress.use(cors({origin: '*'}))
 // cargo las reglas REST
 var reglas = require( "./ReglasREST.js")
 reglas.cargar( servidorExpress, laLogica )
